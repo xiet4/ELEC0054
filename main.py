@@ -1,10 +1,11 @@
+import itertools
 import math
 
 import networkx as nx
 
 terminals = 6
 color_map = []
-G1 = nx.fast_gnp_random_graph(18, 0.1)
+G1 = nx.fast_gnp_random_graph(10, 0.5)
 for node in G1:
     if node < terminals:
         color_map.append('red')
@@ -13,6 +14,8 @@ for node in G1:
 
 pos_G1 = nx.random_layout(G1)
 print(pos_G1)
+terminals_pos = dict(itertools.islice(pos_G1.items(), terminals))
+terminal_nodes = list(G1)[0:terminals]
 
 nx.draw(G1, node_color=color_map, node_size=800, pos=pos_G1, with_labels=True)
 
@@ -96,7 +99,9 @@ def Human_gaze_algorithm_3(Graph, start_node, end_node, pos):
             dead_nodes.append(current_node)
 
             while len(neighbors) == 0:
+
                 current_node = visited_nodes[-1]
+
                 neighbors = list(Graph.neighbors(current_node))
                 # is this still necessary if we have dead_nodes conditional
                 for i in visited_nodes:
@@ -133,10 +138,35 @@ def all_distance(pos):
     return sorted(distance.items(), key=lambda kv: (kv[1], kv[0]))
 
 
-print(all_distance(pos_G1))
+def shortest_distance(pos):
+    start = pos[0][0][0]
+    end = pos[0][0][1]
+    return start, end
 
-first = next(iter(all_distance(pos_G1)))
-start = first[0][0]
-end = first[0][1]
-print(start,end)
-print(Human_gaze_algorithm_3(G1,start,end,pos_G1))
+
+def shortest_distance2(components, terminals_nodes):
+    distance = {}
+    for i in components:
+        for j in terminals_nodes:
+            distance[i, j] = cal_distance(pos_G1.get(i), pos_G1.get(j))
+    return shortest_distance(sorted(distance.items(), key=lambda kv: (kv[1], kv[0])))
+
+
+n = 0
+start = 0
+end = 0
+components = []
+while len(terminal_nodes) > 0:
+    if n == 0:
+        start, end = shortest_distance(all_distance(terminals_pos))
+        components = Human_gaze_algorithm_3(G1, start, end, pos_G1)
+
+    terminals_nodes = [i for i in terminal_nodes if i not in components]
+    if len(terminals_nodes) == 0: break
+    start, end = shortest_distance2(components, terminals_nodes)
+    new_components = Human_gaze_algorithm_3(G1, start, end, pos_G1)
+    components = list(set(components).union(set(new_components)))
+    terminals_nodes.remove(end)
+    n = n + 1
+
+print(components)
