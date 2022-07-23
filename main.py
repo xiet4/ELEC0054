@@ -2,6 +2,8 @@ import itertools
 import math
 import time
 
+import networkx as nx
+
 
 def dot(v, w):
     x, y = v
@@ -135,6 +137,14 @@ def shortest_distance2(components, terminals_nodes, pos):
     return shortest_distance(sorted(distance.items(), key=lambda kv: (kv[1], kv[0])))
 
 
+def shortest_distance3(components, terminals_nodes, G):
+    distance = {}
+    for i in components:
+        for j in terminals_nodes:
+            distance[i, j] = len(nx.dijkstra_path(G, i, j))
+    return shortest_distance(sorted(distance.items(), key=lambda kv: (kv[1], kv[0])))
+
+
 def algorithm(G, pos, terminals):
     i = 0
     for key in pos.copy():
@@ -145,7 +155,7 @@ def algorithm(G, pos, terminals):
     terminal_node = list(G)[0:terminals]
     n = 0
     components = []
-    start_time = time.time()
+    start_time = time.perf_counter()
     while len(terminal_node) > 0:
         if n == 0:
             start, end = shortest_distance(all_distance(terminals_pos))
@@ -159,7 +169,34 @@ def algorithm(G, pos, terminals):
         components = list(set(components).union(set(new_components)))
         terminals_node.remove(end)
         n = n + 1
-    end_time = time.time()
+    end_time = time.perf_counter()
+    print(components)
+    print(len(components))
+    print("time cost:", float(end_time - start_time) * 1000.0, "ms")
+
+
+def sph(G, pos, terminals):
+    i = 0
+    for key in pos.copy():
+        pos[i] = pos.pop(key)
+        i = i + 1
+    n=0
+    terminal_node = list(G)[0:terminals]
+    components = []
+    start_time = time.perf_counter()
+    while len(terminal_node) > 0:
+        if n == 0:
+            components = nx.dijkstra_path(G, 0, 1)
+
+        terminals_node = [i for i in terminal_node if i not in components]
+        if len(terminals_node) == 0:
+            break
+        start, end = shortest_distance3(components, terminals_node, G)
+        new_components = nx.dijkstra_path(G, start, end)
+        components = list(set(components).union(set(new_components)))
+        terminals_node.remove(end)
+        n = n + 1
+    end_time = time.perf_counter()
     print(components)
     print(len(components))
     print("time cost:", float(end_time - start_time) * 1000.0, "ms")

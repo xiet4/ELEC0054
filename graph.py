@@ -1,3 +1,5 @@
+import time
+
 import networkx as nx
 from matplotlib import pyplot as plt
 from networkx.algorithms.approximation import steiner_tree
@@ -275,8 +277,9 @@ plt.show()
 
 G = nx.convert_node_labels_to_integers(G1, first_label=0, ordering='default', label_attribute=None)
 terminal_nodes = list(G)[0:terminals]
-print(steiner_tree(G, terminal_nodes))
+main.sph(G, pos_G1, terminals)
 main.algorithm(G, pos_G1, terminals)
+print("-------------------------")
 
 # graph 2  USA 75 nodes
 
@@ -474,8 +477,6 @@ G2.add_edges_from([
     ("Tallahassee", "Tampa", {"weight": 394.0942686})
 ])
 
-nx.draw(G2, pos=pos_G2, with_labels=True)
-
 for i in range(0, len(G2)):
     if i < terminals:
         color_map.append('red')
@@ -486,5 +487,401 @@ plt.show()
 
 G = nx.convert_node_labels_to_integers(G2, first_label=0, ordering='default', label_attribute=None)
 terminal_nodes = list(G)[0:terminals]
-print(steiner_tree(G, terminal_nodes))
+main.sph(G, pos_G2, terminals)
 main.algorithm(G, pos_G2, terminals)
+print("-------------------------")
+
+# Graph 3 Germany
+terminals = 30
+color_map = []
+G3 = nx.Graph()
+
+G3.add_nodes_from(["Aachen", "Augsburg", "Bayreuth", "Berlin", "Bielefeld", "Braunschweig", "Bremen", "Bremerhaven",
+                   "Chemnitz", "Darmstadt", "Dortmund", "Dresden", "Duesseldorf", "Erfurt", "Essen", "Flensburg",
+                   "Frankfurt", "Freiburg", "Fulda", "Giessen", "Greifswald", "Hamburg", "Hannover", "Kaiserslautern",
+                   "Karlsruhe", "Kassel", "Kempten", "Kiel", "Koblenz", "Koeln", "Konstanz", "Leipzig", "Magdeburg",
+                   "Mannheim", "Muenchen", "Muenster", "Norden", "Nuernberg", "Oldenburg", "Osnabrueck", "Passau",
+                   "Regensburg", "Saarbruecken", "Schwerin", "Siegen", "Stuttgart", "Trier", "Ulm", "Wesel",
+                   "Wuerzburg"])
+
+pos_G3 = {"Aachen": (6.04, 50.76),
+          "Augsburg": (10.90, 48.33),
+          "Bayreuth": (11.59, 49.93),
+          "Berlin": (13.39, 52.52),
+          "Bielefeld": (8.50, 52.04),
+          "Braunschweig": (10.55, 52.28),
+          "Bremen": (8.85, 53.11),
+          "Bremerhaven": (8.58, 53.54),
+          "Chemnitz": (12.93, 50.84),
+          "Darmstadt": (8.65, 49.89),
+          "Dortmund": (7.45, 51.51),
+          "Dresden": (13.73, 51.03),
+          "Duesseldorf": (6.77, 51.25),
+          "Erfurt": (11.04, 50.98),
+          "Essen": (7.02, 51.46),
+          "Flensburg": (9.45, 54.77),
+          "Frankfurt": (8.71, 50.12),
+          "Freiburg": (7.80, 47.98),
+          "Fulda": (9.69, 50.56),
+          "Giessen": (8.67, 50.57),
+          "Greifswald": (13.40, 54.09),
+          "Hamburg": (9.99, 53.57),
+          "Hannover": (9.72, 52.38),
+          "Kaiserslautern": (7.75, 49.43),
+          "Karlsruhe": (8.41, 49.01),
+          "Kassel": (9.51, 51.32),
+          "Kempten": (10.32, 47.72),
+          "Kiel": (10.12, 54.34),
+          "Koblenz": (7.52, 50.40),
+          "Koeln": (6.87, 50.94),
+          "Konstanz": (9.18, 47.66),
+          "Leipzig": (12.38, 51.34),
+          "Magdeburg": (11.64, 52.14),
+          "Mannheim": (8.49, 49.49),
+          "Muenchen": (11.57, 48.15),
+          "Muenster": (7.60, 51.97),
+          "Norden": (7.21, 53.60),
+          "Nuernberg": (11.03, 49.57),
+          "Oldenburg": (8.21, 53.11),
+          "Osnabrueck": (8.03, 52.28),
+          "Passau": (13.46, 48.57),
+          "Regensburg": (12.09, 49.00),
+          "Saarbruecken": (7.03, 49.23),
+          "Schwerin": (11.45, 53.55),
+          "Siegen": (8.03, 50.91),
+          "Stuttgart": (9.10, 48.74),
+          "Trier": (6.68, 49.75),
+          "Ulm": (9.99, 48.40),
+          "Wesel": (6.37, 51.39),
+          "Wuerzburg": (9.97, 49.78)
+          }
+
+G3.add_edges_from([
+    ("Duesseldorf", "Essen", {"weight": 30.74}),
+    ("Dortmund", "Essen", {"weight": 31.69}),
+    ("Wesel", "Essen", {"weight": 35.53}),
+    ("Koeln", "Duesseldorf", {"weight": 34.15}),
+    ("Aachen", "Koeln", {"weight": 64.33}),
+    ("Koblenz", "Koeln", {"weight": 79.05}),
+    ("Muenster", "Dortmund", {"weight": 51.71}),
+    ("Siegen", "Dortmund", {"weight": 80.89}),
+    ("Kassel", "Dortmund", {"weight": 142.47}),
+    ("Wesel", "Aachen", {"weight": 104.69}),
+    ("Trier", "Aachen", {"weight": 120.53}),
+    ("Bielefeld", "Muenster", {"weight": 62.28}),
+    ("Osnabrueck", "Muenster", {"weight": 44.42}),
+    ("Siegen", "Koblenz", {"weight": 64.83}),
+    ("Frankfurt", "Koblenz", {"weight": 81.53}),
+    ("Kaiserslautern", "Koblenz", {"weight": 102.12}),
+    ("Trier", "Koblenz", {"weight": 95.49}),
+    ("Bielefeld", "Siegen", {"weight": 132.59}),
+    ("Giessen", "Siegen", {"weight": 56.23}),
+    ("Oldenburg", "Wesel", {"weight": 197.36}),
+    ("Norden", "Wesel", {"weight": 219.22}),
+    ("Leipzig", "Berlin", {"weight": 149.7}),
+    ("Dresden", "Berlin", {"weight": 165.22}),
+    ("Schwerin", "Berlin", {"weight": 181.03}),
+    ("Magdeburg", "Berlin", {"weight": 128.00}),
+    ("Greifswald", "Berlin", {"weight": 175.00}),
+    ("Dresden", "Leipzig", {"weight": 100.21}),
+    ("Erfurt", "Leipzig", {"weight": 102.50}),
+    ("Magdeburg", "Leipzig", {"weight": 101.44}),
+    ("Bayreuth", "Leipzig", {"weight": 165.39}),
+    ("Erfurt", "Dresden", {"weight": 189.86}),
+    ("Chemnitz", "Dresden", {"weight": 61.69}),
+    ("Chemnitz", "Erfurt", {"weight": 134.27}),
+    ("Kassel", "Erfurt", {"weight": 113.27}),
+    ("Wuerzburg", "Erfurt", {"weight": 152.40}),
+    ("Bayreuth", "Chemnitz", {"weight": 137.92}),
+    ("Magdeburg", "Schwerin", {"weight": 166.81}),
+    ("Greifswald", "Schwerin", {"weight": 139.47}),
+    ("Hamburg", "Schwerin", {"weight": 94.40}),
+    ("Kiel", "Schwerin", {"weight": 114.12}),
+    ("Braunschweig", "Magdeburg", {"weight": 77.33}),
+    ("Kiel", "Hamburg", {"weight": 86.01}),
+    ("Hannover", "Hamburg", {"weight": 132.52}),
+    ("Braunschweig", "Hamburg", {"weight": 147.82}),
+    ("Oldenburg", "Bremen", {"weight": 40.01}),
+    ("Bremerhaven", "Bremen", {"weight": 53.67}),
+    ("Hannover", "Bremen", {"weight": 100.10}),
+    ("Flensburg", "Kiel", {"weight": 68.15}),
+    ("Norden", "Oldenburg", {"weight": 84.38}),
+    ("Osnabrueck", "Oldenburg", {"weight": 97.30}),
+    ("Bremerhaven", "Flensburg", {"weight": 148.71}),
+    ("Bielefeld", "Hannover", {"weight": 90.68}),
+    ("Braunschweig", "Hannover", {"weight": 55.07}),
+    ("Osnabrueck", "Hannover", {"weight": 114.95}),
+    ("Braunschweig", "Bielefeld", {"weight": 138.63}),
+    ("Kassel", "Braunschweig", {"weight": 126.83}),
+    ("Giessen", "Kassel", {"weight": 99.75}),
+    ("Fulda", "Kassel", {"weight": 85.97}),
+    ("Darmstadt", "Frankfurt", {"weight": 26.26}),
+    ("Giessen", "Frankfurt", {"weight": 52.59}),
+    ("Fulda", "Frankfurt", {"weight": 86.10}),
+    ("Mannheim", "Darmstadt", {"weight": 44.89}),
+    ("Kaiserslautern", "Darmstadt", {"weight": 79.32}),
+    ("Karlsruhe", "Mannheim", {"weight": 53.26}),
+    ("Saarbruecken", "Kaiserslautern", {"weight": 60.78}),
+    ("Karlsruhe", "Kaiserslautern", {"weight": 66.95}),
+    ("Fulda", "Giessen", {"weight": 70.45}),
+    ("Saarbruecken", "Trier", {"weight": 62.90}),
+    ("Wuerzburg", "Fulda", {"weight": 86.37}),
+    ("Karlsruhe", "Saarbruecken", {"weight": 105.61}),
+    ("Karlsruhe", "Stuttgart", {"weight": 62.34}),
+    ("Ulm", "Stuttgart", {"weight": 73.23}),
+    ("Konstanz", "Stuttgart", {"weight": 124.00}),
+    ("Wuerzburg", "Stuttgart", {"weight": 125.40}),
+    ("Freiburg", "Karlsruhe", {"weight": 119.49}),
+    ("Augsburg", "Ulm", {"weight": 66.31}),
+    ("Freiburg", "Konstanz", {"weight": 105.26}),
+    ("Kempten", "Konstanz", {"weight": 85.50}),
+    ("Augsburg", "Muenchen", {"weight": 56.79}),
+    ("Kempten", "Muenchen", {"weight": 105.22}),
+    ("Passau", "Muenchen", {"weight": 147.33}),
+    ("Nuernberg", "Muenchen", {"weight": 150.34}),
+    ("Regensburg", "Muenchen", {"weight": 104.82}),
+    ("Wuerzburg", "Augsburg", {"weight": 173.69}),
+    ("Regensburg", "Passau", {"weight": 111.27}),
+    ("Bayreuth", "Nuernberg", {"weight": 65.01}),
+    ("Wuerzburg", "Nuernberg", {"weight": 91.43}),
+    ("Regensburg", "Nuernberg", {"weight": 88.48})
+])
+
+for i in range(0, len(G3)):
+    if i < terminals:
+        color_map.append('red')
+    else:
+        color_map.append('blue')
+
+nx.draw(G3, node_color=color_map, node_size=200, pos=pos_G3, with_labels=True)
+plt.show()
+
+G = nx.convert_node_labels_to_integers(G3, first_label=0, ordering='default', label_attribute=None)
+terminal_nodes = list(G)[0:terminals]
+
+main.sph(G, pos_G3, terminals)
+main.algorithm(G, pos_G3, terminals)
+print("-------------------------")
+
+# Graph 4  USA 30
+terminals = 15
+color_map = []
+G4 = nx.Graph()
+
+G4.add_nodes_from(["Atlanta", "Baltimore", "Boston", "Chicago", "Charlotte", "Cleveland", "Dallas", "Denver", "ElPaso",
+                   "Houston", "Indianapolis", "KansasCity", "LosAngeles", "LasVegas", "Miami", "Parkersburg",
+                   "NewOrleans",
+                   "NewYork", "Philadelphia", "Phoenix", "Sacramento", "SaltLakeCity", "SanAntonio", "SanFrancisco",
+                   "SanJose", "StLouis", "Seattle", "Tampa", "Tallahassee", "Washington,DC"])
+
+pos_G4 = {'Atlanta': (84.42, 33.76),
+          'Baltimore': (76.61, 39.3),
+          'Boston': (71.2, 42.43),
+          'Chicago': (87.68, 41.84),
+          'Charlotte': (80.83, 35.2),
+          'Cleveland': (81.68, 41.48),
+          'Dallas': (96.77, 32.79),
+          'Denver': (104.87, 38.77),
+          'ElPaso': (106.44, 31.85),
+          'Houston': (95.39, 29.77),
+          'Indianapolis': (86.15, 39.78),
+          'KansasCity': (94.55, 39.12),
+          'LosAngeles': (118.41, 34.11),
+          'LasVegas': (115.17, 36.8),
+          'Miami': (80.21, 25.78),
+          'Parkersburg': (80.65, 38.48),
+          'NewOrleans': (89.93, 30.7),
+          'NewYork': (73.94, 40.67),
+          'Philadelphia': (75.13, 40.1),
+          'Phoenix': (112.7, 33.54),
+          'Sacramento': (121.47, 38.57),
+          'SaltLakeCity': (111.93, 40.78),
+          'SanAntonio': (98.51, 29.46),
+          'SanFrancisco': (122.38, 37.62),
+          'SanJose': (121.92, 37.37),
+          'StLouis': (90.24, 38.64),
+          'Seattle': (122.35, 47.62),
+          'Tampa': (82.48, 27.96),
+          'Tallahassee': (84.28, 30.46),
+          'Washington,DC': (77.2, 38.91)}
+
+G4.add_edges_from([("Charlotte", "Miami", {"weight": 1365.4}),
+                   ("Atlanta", "Houston", {"weight": 1467}),
+                   ("Atlanta", "Charlotte", {"weight": 457}),
+                   ("StLouis", "Indianapolis", {"weight": 487.3}),
+                   ("Seattle", "Sacramento", {"weight": 1374}),
+                   ("Washington,DC", "Charlotte", {"weight": 730}),
+                   ("Baltimore", "Philadelphia", {"weight": 166.2}),
+                   ("Baltimore", "Washington,DC", {"weight": 71.5}),
+                   ("Denver", "SaltLakeCity", {"weight": 850}),
+                   ("Sacramento", "SanFrancisco", {"weight": 180}),
+                   ("Cleveland", "Boston", {"weight": 1190}),
+                   ("SanJose", "LosAngeles", {"weight": 626.4}),
+                   ("Chicago", "Cleveland", {"weight": 720.6}),
+                   ("Chicago", "Indianapolis", {"weight": 357.1}),
+                   ("Denver", "ElPaso", {"weight": 1160.8}),
+                   ("Boston", "NewYork", {"weight": 398.1}),
+                   ("NewOrleans", "Houston", {"weight": 686.1}),
+                   ("Parkersburg", "Washington,DC", {"weight": 414.9}),
+                   ("KansasCity", "Dallas", {"weight": 1060}),
+                   ("Dallas", "Houston", {"weight": 464.6}),
+                   ("Indianapolis", "Parkersburg", {"weight": 680}),
+                   ("SaltLakeCity", "LasVegas", {"weight": 772.8}),
+                   ("SaltLakeCity", "Sacramento", {"weight": 1110}),
+                   ("KansasCity", "Denver", {"weight": 1156.5}),
+                   ("ElPaso", "Phoenix", {"weight": 720}),
+                   ("ElPaso", "SanAntonio", {"weight": 978.8}),
+                   ("Seattle", "SaltLakeCity", {"weight": 1463.4}),
+                   ("Houston", "SanAntonio", {"weight": 380}),
+                   ("LosAngeles", "Phoenix", {"weight": 766.5}),
+                   ("KansasCity", "StLouis", {"weight": 489.8}),
+                   ("LasVegas", "Phoenix", {"weight": 526.4}),
+                   ("Miami", "Tampa", {"weight": 430}),
+                   ("NewOrleans", "Tallahassee", {"weight": 702.6}),
+                   ("NewYork", "Philadelphia", {"weight": 164.5}),
+                   ("SanFrancisco", "SanJose", {"weight": 69}),
+                   ("Tampa", "Tallahassee", {"weight": 426})])
+
+for i in range(0, len(G4)):
+    if i < terminals:
+        color_map.append('red')
+    else:
+        color_map.append('blue')
+
+nx.draw(G4, node_color=color_map, node_size=200, pos=pos_G4, with_labels=True)
+plt.show()
+
+G = nx.convert_node_labels_to_integers(G4, first_label=0, ordering='default', label_attribute=None)
+terminal_nodes = list(G)[0:terminals]
+
+main.sph(G, pos_G4, terminals)
+main.algorithm(G, pos_G4, terminals)
+print("-------------------------")
+
+
+# Graph 5  Europe
+terminals = 60
+color_map = []
+G5 = nx.Graph()
+
+G5.add_nodes_from(["Amsterdam", "Athens", "Barcelona", "Belgrade", "Berlin", "Birmingham", "Bordeaux", "Brussels",
+                   "Budapest", "Copenhagen", "Dublin", "Dusseldorf", "Frankfurt", "Glasgow", "Hamburg", "Helsinki",
+                   "Krakow", "Lisbon", "London", "Lyon", "Madrid", "Marseille", "Milan", "Munich", "Oslo", "Palermo",
+                   "Paris", "Prague", "Rome", "Seville", "Sofia", "Stockholm", "Strasbourg", "Vienna", "Warsaw",
+                   "Zagreb", "Zurich"])
+
+pos_G5 = {
+    "Amsterdam": (4.90, 52.35),
+    "Athens": (23.73, 38.00),
+    "Barcelona": (2.18, 41.37),
+    "Belgrade": (20.50, 44.83),
+    "Berlin": (13.40, 52.52),
+    "Birmingham": (-1.88, 52.47),
+    "Bordeaux": (-0.57, 44.85),
+    "Brussels": (4.35, 50.83),
+    "Budapest": (19.08, 47.50),
+    "Copenhagen": (12.57, 55.72),
+    "Dublin": (-6.25, 53.33),
+    "Dusseldorf": (6.78, 51.23),
+    "Frankfurt": (8.67, 50.10),
+    "Glasgow": (-4.25, 55.85),
+    "Hamburg": (10.02, 53.55),
+    "Helsinki": (24.97, 60.17),
+    "Krakow": (19.95, 50.05),
+    "Lisbon": (-9.13, 38.73),
+    "London": (-0.17, 51.50),
+    "Lyon": (4.83, 45.73),
+    "Madrid": (-3.72, 40.42),
+    "Marseille": (5.37, 43.30),
+    "Milan": (9.17, 45.47),
+    "Munich": (11.57, 48.13),
+    "Oslo": (10.75, 59.93),
+    "Palermo": (13.35, 38.12),
+    "Paris": (2.33, 48.87),
+    "Prague": (14.43, 50.08),
+    "Rome": (12.50, 41.88),
+    "Seville": (-5.98, 37.38),
+    "Sofia": (23.33, 42.75),
+    "Stockholm": (18.05, 59.33),
+    "Strasbourg": (7.77, 48.58),
+    "Vienna": (16.37, 48.22),
+    "Warsaw": (21.00, 52.25),
+    "Zagreb": (16.02, 45.83),
+    "Zurich": (8.55, 47.38)
+}
+
+G5.add_edges_from([
+    ("Amsterdam", "Brussels", {"weight": 2.59}),
+    ("Amsterdam", "Glasgow", {"weight": 10.67}),
+    ("Amsterdam", "Hamburg", {"weight": 5.52}),
+    ("Amsterdam", "London", {"weight": 5.40}),
+    ("Athens", "Palermo", {"weight": 13.63}),
+    ("Athens", "Sofia", {"weight": 7.94}),
+    ("Athens", "Zagreb", {"weight": 15.00}),
+    ("Barcelona", "Madrid", {"weight": 7.60}),
+    ("Barcelona", "Marseille", {"weight": 5.08}),
+    ("Barcelona", "Seville", {"weight": 12.44}),
+    ("Belgrade", "Budapest", {"weight": 4.74}),
+    ("Belgrade", "Sofia", {"weight": 4.87}),
+    ("Belgrade", "Zagreb", {"weight": 5.51}),
+    ("Berlin", "Copenhagen", {"weight": 5.40}),
+    ("Berlin", "Hamburg", {"weight": 3.81}),
+    ("Berlin", "Munich", {"weight": 7.57}),
+    ("Berlin", "Prague", {"weight": 4.20}),
+    ("Berlin", "Warsaw", {"weight": 7.75}),
+    ("Birmingham", "Glasgow", {"weight": 6.10}),
+    ("Birmingham", "London", {"weight": 2.39}),
+    ("Bordeaux", "Madrid", {"weight": 8.34}),
+    ("Bordeaux", "Marseille", {"weight": 7.56}),
+    ("Bordeaux", "Paris", {"weight": 7.47}),
+    ("Brussels", "Dusseldorf", {"weight": 2.64}),
+    ("Brussels", "Paris", {"weight": 3.93}),
+    ("Budapest", "Krakow", {"weight": 4.36}),
+    ("Budapest", "Prague", {"weight": 6.68}),
+    ("Copenhagen", "Oslo", {"weight": 7.22}),
+    ("Copenhagen", "Stockholm", {"weight": 7.77}),
+    ("Dublin", "Glasgow", {"weight": 4.62}),
+    ("Dublin", "London", {"weight": 6.90}),
+    ("Dusseldorf", "Frankfurt", {"weight": 2.75}),
+    ("Frankfurt", "Hamburg", {"weight": 5.92}),
+    ("Frankfurt", "Munich", {"weight": 4.56}),
+    ("Frankfurt", "Strasbourg", {"weight": 2.71}),
+    ("Helsinki", "Oslo", {"weight": 11.82}),
+    ("Helsinki", "Stockholm", {"weight": 5.97}),
+    ("Helsinki", "Warsaw", {"weight": 13.70}),
+    ("Krakow", "Warsaw", {"weight": 3.83}),
+    ("Lisbon", "London", {"weight": 19.77}),
+    ("Lisbon", "Madrid", {"weight": 7.51}),
+    ("Lisbon", "Seville", {"weight": 4.71}),
+    ("London", "Paris", {"weight": 5.14}),
+    ("Lyon", "Marseille", {"weight": 4.11}),
+    ("Lyon", "Paris", {"weight": 5.94}),
+    ("Lyon", "Zurich", {"weight": 5.07}),
+    ("Marseille", "Rome", {"weight": 9.07}),
+    ("Milan", "Munich", {"weight": 5.22}),
+    ("Milan", "Rome", {"weight": 7.20}),
+    ("Milan", "Zurich", {"weight": 3.27}),
+    ("Munich", "Vienna", {"weight": 5.34}),
+    ("Palermo", "Rome", {"weight": 6.38}),
+    ("Paris", "Strasbourg", {"weight": 6.00}),
+    ("Prague", "Vienna", {"weight": 3.76}),
+    ("Rome", "Zagreb", {"weight": 7.83}),
+    ("Strasbourg", "Zurich", {"weight": 2.18}),
+    ("Vienna", "Zagreb", {"weight": 4.00})
+])
+
+for i in range(0, len(G5)):
+    if i < terminals:
+        color_map.append('red')
+    else:
+        color_map.append('blue')
+
+nx.draw(G5, node_color=color_map, node_size=200, pos=pos_G5, with_labels=True)
+plt.show()
+
+G = nx.convert_node_labels_to_integers(G5, first_label=0, ordering='default', label_attribute=None)
+terminal_nodes = list(G)[0:terminals]
+
+main.sph(G, pos_G5, terminals)
+main.algorithm(G, pos_G5, terminals)
+print("-------------------------")
