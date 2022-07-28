@@ -45,42 +45,42 @@ pos_G4 = {'Atlanta': (84.42, 33.76),
           'Tallahassee': (84.28, 30.46),
           'Washington,DC': (77.2, 38.91)}
 
-G4.add_edges_from([("Charlotte", "Miami", {"weight": 1365.4}),
-                   ("Atlanta", "Houston", {"weight": 1467}),
-                   ("Atlanta", "Charlotte", {"weight": 457}),
-                   ("StLouis", "Indianapolis", {"weight": 487.3}),
-                   ("Seattle", "Sacramento", {"weight": 1374}),
-                   ("Washington,DC", "Charlotte", {"weight": 730}),
-                   ("Baltimore", "Philadelphia", {"weight": 166.2}),
-                   ("Baltimore", "Washington,DC", {"weight": 71.5}),
-                   ("Denver", "SaltLakeCity", {"weight": 850}),
-                   ("Sacramento", "SanFrancisco", {"weight": 180}),
-                   ("Cleveland", "Boston", {"weight": 1190}),
-                   ("SanJose", "LosAngeles", {"weight": 626.4}),
-                   ("Chicago", "Cleveland", {"weight": 720.6}),
-                   ("Chicago", "Indianapolis", {"weight": 357.1}),
-                   ("Denver", "ElPaso", {"weight": 1160.8}),
-                   ("Boston", "NewYork", {"weight": 398.1}),
-                   ("NewOrleans", "Houston", {"weight": 686.1}),
-                   ("Parkersburg", "Washington,DC", {"weight": 414.9}),
-                   ("KansasCity", "Dallas", {"weight": 1060}),
-                   ("Dallas", "Houston", {"weight": 464.6}),
-                   ("Indianapolis", "Parkersburg", {"weight": 680}),
-                   ("SaltLakeCity", "LasVegas", {"weight": 772.8}),
-                   ("SaltLakeCity", "Sacramento", {"weight": 1110}),
-                   ("KansasCity", "Denver", {"weight": 1156.5}),
-                   ("ElPaso", "Phoenix", {"weight": 720}),
-                   ("ElPaso", "SanAntonio", {"weight": 978.8}),
-                   ("Seattle", "SaltLakeCity", {"weight": 1463.4}),
-                   ("Houston", "SanAntonio", {"weight": 380}),
-                   ("LosAngeles", "Phoenix", {"weight": 766.5}),
-                   ("KansasCity", "StLouis", {"weight": 489.8}),
-                   ("LasVegas", "Phoenix", {"weight": 526.4}),
-                   ("Miami", "Tampa", {"weight": 430}),
-                   ("NewOrleans", "Tallahassee", {"weight": 702.6}),
-                   ("NewYork", "Philadelphia", {"weight": 164.5}),
-                   ("SanFrancisco", "SanJose", {"weight": 69}),
-                   ("Tampa", "Tallahassee", {"weight": 426})])
+G4.add_edges_from([("Charlotte", "Miami", {"weight": 1}),
+                   ("Atlanta", "Houston", {"weight": 1}),
+                   ("Atlanta", "Charlotte", {"weight": 1}),
+                   ("StLouis", "Indianapolis", {"weight": 1}),
+                   ("Seattle", "Sacramento", {"weight": 1}),
+                   ("Washington,DC", "Charlotte", {"weight": 1}),
+                   ("Baltimore", "Philadelphia", {"weight": 1}),
+                   ("Baltimore", "Washington,DC", {"weight": 1}),
+                   ("Denver", "SaltLakeCity", {"weight": 1}),
+                   ("Sacramento", "SanFrancisco", {"weight": 1}),
+                   ("Cleveland", "Boston", {"weight": 1}),
+                   ("SanJose", "LosAngeles", {"weight": 1}),
+                   ("Chicago", "Cleveland", {"weight": 1}),
+                   ("Chicago", "Indianapolis", {"weight": 1}),
+                   ("Denver", "ElPaso", {"weight": 1}),
+                   ("Boston", "NewYork", {"weight": 1}),
+                   ("NewOrleans", "Houston", {"weight": 1}),
+                   ("Parkersburg", "Washington,DC", {"weight": 1}),
+                   ("KansasCity", "Dallas", {"weight": 1}),
+                   ("Dallas", "Houston", {"weight": 1}),
+                   ("Indianapolis", "Parkersburg", {"weight": 1}),
+                   ("SaltLakeCity", "LasVegas", {"weight": 1}),
+                   ("SaltLakeCity", "Sacramento", {"weight": 1}),
+                   ("KansasCity", "Denver", {"weight": 1}),
+                   ("ElPaso", "Phoenix", {"weight": 1}),
+                   ("ElPaso", "SanAntonio", {"weight": 1}),
+                   ("Seattle", "SaltLakeCity", {"weight": 1}),
+                   ("Houston", "SanAntonio", {"weight": 1}),
+                   ("LosAngeles", "Phoenix", {"weight": 1}),
+                   ("KansasCity", "StLouis", {"weight": 1}),
+                   ("LasVegas", "Phoenix", {"weight": 1}),
+                   ("Miami", "Tampa", {"weight": 1}),
+                   ("NewOrleans", "Tallahassee", {"weight": 1}),
+                   ("NewYork", "Philadelphia", {"weight": 1}),
+                   ("SanFrancisco", "SanJose", {"weight": 1}),
+                   ("Tampa", "Tallahassee", {"weight": 1})])
 
 for i in range(0, len(G4)):
     if i < terminals:
@@ -90,8 +90,9 @@ for i in range(0, len(G4)):
 
 nx.draw(G4, node_color=color_map, node_size=200, pos=pos_G4, with_labels=True)
 plt.show()
-
 G = nx.convert_node_labels_to_integers(G4, first_label=0, ordering='default', label_attribute=None)
+print(nx.dijkstra_path(G,0,25,weight='weight'))
+
 terminal_nodes = list(G)[0:terminals]
 print(steiner_tree(G,terminal_nodes))
 main.sph(G, pos_G4, terminals)

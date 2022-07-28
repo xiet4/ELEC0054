@@ -153,6 +153,13 @@ def shortest_distance4(components, terminals_nodes, pos, G):
     return shortest_distance(sorted(distance.items(), key=lambda kv: (kv[1], kv[0])))
 
 
+def shortest_distance5(terminals_nodes,G):
+    distance={}
+    for i in terminals_nodes:
+        distance[0,i] = len(nx.dijkstra_path(G,0,i))
+    return shortest_distance(sorted(distance.items(), key=lambda kv: (kv[1], kv[0])))
+
+
 def algorithm(G, pos, terminals):
     i = 0
     for key in pos.copy():
@@ -215,6 +222,7 @@ def algorithm2(G, pos, terminals):
     print("time cost:", float(end_time - start_time) * 1000.0, "ms")
     return components
 
+
 def sph(G, pos, terminals):
     i = 0
     for key in pos.copy():
@@ -227,7 +235,7 @@ def sph(G, pos, terminals):
     start_time = time.perf_counter()
     while len(terminal_node) > 0:
         if n == 0:
-            start, end = shortest_distance(all_distance(terminals_pos))
+            start, end = shortest_distance5(terminal_node,G)
             components = nx.dijkstra_path(G, start, end)
 
         terminals_node = [i for i in terminal_node if i not in components]
