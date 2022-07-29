@@ -4,12 +4,11 @@ import time
 import networkx as nx
 from matplotlib import pyplot as plt
 
-
 import main
 
 # graph 1  world 100 nodes
 
-terminals = 60
+terminals = 30
 color_map = []
 
 G1 = nx.Graph()
@@ -129,74 +128,74 @@ pos_G1 = {"Abilene": (32.45, -99.739998),
           "Taipei": (25.0200005, 121.449997),
           "Tokyo": (35.6699986, 139.770004)}
 
-G1.add_edges_from([('Abilene', 'Dallas', {'weight': 1}), ('Abilene', 'El_Paso', {'weight': 1}), ('Albany', 'Boston', {'weight': 1}),
-       ('Albany', 'Syracuse', {'weight': 1}), ('Albuquerque', 'Dallas', {'weight': 1}),
-       ('Albuquerque', 'Denver', {'weight': 1}), ('Albuquerque', 'El_Paso', {'weight': 1}),
-       ('Albuquerque', 'Las_Vegas', {'weight': 1}), ('Amsterdam', 'Berlin', {'weight': 1}),
-       ('Amsterdam', 'Brussels', {'weight': 1}), ('Amsterdam', 'Frankfurt', {'weight': 1}),
-       ('Amsterdam', 'New_York', {'weight': 1}), ('Atlanta', 'Birmingham', {'weight': 1}),
-       ('Atlanta', 'Charlotte', {'weight': 1}), ('Atlanta', 'Jacksonville', {'weight': 1}),
-       ('Austin', 'Houston', {'weight': 1}), ('Austin', 'San_Antonio', {'weight': 1}),
-       ('Baltimore', 'Philadelphia', {'weight': 1}), ('Baltimore', 'Pittsburgh', {'weight': 1}),
-       ('Baltimore', 'Washington_DC', {'weight': 1}), ('Bangkok', 'Delhi', {'weight': 1}),
-       ('Bangkok', 'Hong_Kong', {'weight': 1}), ('Baton_Rouge', 'Houston', {'weight': 1}),
-       ('Baton_Rouge', 'New_Orleans', {'weight': 1}), ('Beijing', 'Seoul', {'weight': 1}),
-       ('Beijing', 'Shanghai', {'weight': 1}), ('Berlin', 'Warsaw', {'weight': 1}),
-       ('Billings', 'Bismarck', {'weight': 1}), ('Billings', 'Denver', {'weight': 1}),
-       ('Billings', 'Spokane', {'weight': 1}), ('Birmingham', 'Nashville', {'weight': 1}),
-       ('Birmingham', 'New_Orleans', {'weight': 1}), ('Bismarck', 'Minneapolis', {'weight': 1}),
-       ('Boston', 'Providence', {'weight': 1}), ('Brussels', 'London', {'weight': 1}),
-       ('Bucharest', 'Istanbul', {'weight': 1}), ('Bucharest', 'Warsaw', {'weight': 1}),
-       ('Buffalo', 'Cleveland', {'weight': 1}), ('Buffalo', 'Rochester', {'weight': 1}),
-       ('Charleston', 'Jacksonville', {'weight': 1}), ('Charleston', 'Raleigh', {'weight': 1}),
-       ('Charlotte', 'Greensboro', {'weight': 1}), ('Chicago', 'Detroit', {'weight': 1}),
-       ('Chicago', 'Milwaukee', {'weight': 1}), ('Chicago', 'Springfield', {'weight': 1}),
-       ('Cincinnati', 'Columbus', {'weight': 1}), ('Cincinnati', 'Louisville', {'weight': 1}),
-       ('Cincinnati', 'Washington_DC', {'weight': 1}), ('Cleveland', 'Columbus', {'weight': 1}),
-       ('Cleveland', 'Toledo', {'weight': 1}), ('Columbus', 'Pittsburgh', {'weight': 1}),
-       ('Dallas', 'Houston', {'weight': 1}), ('Dallas', 'Little_Rock', {'weight': 1}),
-       ('Dallas', 'Oklahoma_City', {'weight': 1}), ('Delhi', 'Istanbul', {'weight': 1}),
-       ('Delhi', 'Mumbai', {'weight': 1}), ('Denver', 'Omaha', {'weight': 1}),
-       ('Denver', 'Salt_Lake_City', {'weight': 1}), ('Detroit', 'Toledo', {'weight': 1}),
-       ('El_Paso', 'San_Antonio', {'weight': 1}), ('El_Paso', 'Tucson', {'weight': 1}),
-       ('Frankfurt', 'Vienna', {'weight': 1}), ('Fresno', 'Las_Vegas', {'weight': 1}),
-       ('Fresno', 'Los_Angeles', {'weight': 1}), ('Fresno', 'Oakland', {'weight': 1}),
-       ('Greensboro', 'Louisville', {'weight': 1}), ('Greensboro', 'Raleigh', {'weight': 1}),
-       ('Greensboro', 'Richmond', {'weight': 1}), ('Hartford', 'Long_Island', {'weight': 1}),
-       ('Hartford', 'Providence', {'weight': 1}), ('Hong_Kong', 'Shanghai', {'weight': 1}),
-       ('Hong_Kong', 'Sydney', {'weight': 1}), ('Hong_Kong', 'Taipei', {'weight': 1}),
-       ('Honolulu', 'Los_Angeles', {'weight': 1}), ('Honolulu', 'Sydney', {'weight': 1}),
-       ('Honolulu', 'Taipei', {'weight': 1}), ('Istanbul', 'Rome', {'weight': 1}),
-       ('Jacksonville', 'Orlando', {'weight': 1}), ('Kansas_City', 'Omaha', {'weight': 1}),
-       ('Kansas_City', 'St_Louis', {'weight': 1}), ('Kansas_City', 'Tulsa', {'weight': 1}),
-       ('Las_Vegas', 'Phoenix', {'weight': 1}), ('Las_Vegas', 'Salt_Lake_City', {'weight': 1}),
-       ('Little_Rock', 'Memphis', {'weight': 1}), ('London', 'Paris', {'weight': 1}),
-       ('London', 'Washington_DC', {'weight': 1}), ('Long_Island', 'New_York', {'weight': 1}),
-       ('Los_Angeles', 'San_Diego', {'weight': 1}), ('Los_Angeles', 'Santa_Barbara', {'weight': 1}),
-       ('Louisville', 'Nashville', {'weight': 1}), ('Louisville', 'St_Louis', {'weight': 1}),
-       ('Madrid', 'Paris', {'weight': 1}), ('Madrid', 'Zurich', {'weight': 1}), ('Memphis', 'Nashville', {'weight': 1}),
-       ('Miami', 'Paris', {'weight': 1}), ('Miami', 'Tampa', {'weight': 1}),
-       ('Miami', 'West_Palm_Beach', {'weight': 1}), ('Milwaukee', 'Minneapolis', {'weight': 1}),
-       ('Minneapolis', 'Omaha', {'weight': 1}), ('Mumbai', 'Rome', {'weight': 1}),
-       ('Mumbai', 'Singapore', {'weight': 1}), ('New_Orleans', 'Tallahassee', {'weight': 1}),
-       ('New_York', 'Newark', {'weight': 1}), ('New_York', 'Scranton', {'weight': 1}),
-       ('New_York', 'Wilmington', {'weight': 1}), ('Newark', 'Philadelphia', {'weight': 1}),
-       ('Norfolk', 'Raleigh', {'weight': 1}), ('Norfolk', 'Wilmington', {'weight': 1}),
-       ('Oakland', 'Sacramento', {'weight': 1}), ('Oakland', 'Salt_Lake_City', {'weight': 1}),
-       ('Oakland', 'San_Francisco', {'weight': 1}), ('Oakland', 'Taipei', {'weight': 1}),
-       ('Oklahoma_City', 'Tulsa', {'weight': 1}), ('Orlando', 'West_Palm_Beach', {'weight': 1}),
-       ('Philadelphia', 'Scranton', {'weight': 1}), ('Phoenix', 'San_Diego', {'weight': 1}),
-       ('Phoenix', 'Tucson', {'weight': 1}), ('Pittsburgh', 'Scranton', {'weight': 1}),
-       ('Portland', 'Sacramento', {'weight': 1}), ('Portland', 'Salt_Lake_City', {'weight': 1}),
-       ('Portland', 'Seattle', {'weight': 1}), ('Portland', 'Tokyo', {'weight': 1}),
-       ('Richmond', 'Washington_DC', {'weight': 1}), ('Rochester', 'Syracuse', {'weight': 1}),
-       ('Rome', 'Vienna', {'weight': 1}), ('Rome', 'Zurich', {'weight': 1}),
-       ('San_Francisco', 'San_Jose', {'weight': 1}), ('San_Jose', 'Santa_Barbara', {'weight': 1}),
-       ('Scranton', 'Syracuse', {'weight': 1}), ('Seattle', 'Spokane', {'weight': 1}),
-       ('Seoul', 'Tokyo', {'weight': 1}), ('Singapore', 'Sydney', {'weight': 1}),
-       ('Springfield', 'St_Louis', {'weight': 1}), ('Taipei', 'Tokyo', {'weight': 1}),
-       ('Tallahassee', 'Tampa', {'weight': 1}), ('Vienna', 'Warsaw', {'weight': 1})])
-
+G1.add_edges_from(
+    [('Abilene', 'Dallas', {'weight': 1}), ('Abilene', 'El_Paso', {'weight': 1}), ('Albany', 'Boston', {'weight': 1}),
+     ('Albany', 'Syracuse', {'weight': 1}), ('Albuquerque', 'Dallas', {'weight': 1}),
+     ('Albuquerque', 'Denver', {'weight': 1}), ('Albuquerque', 'El_Paso', {'weight': 1}),
+     ('Albuquerque', 'Las_Vegas', {'weight': 1}), ('Amsterdam', 'Berlin', {'weight': 1}),
+     ('Amsterdam', 'Brussels', {'weight': 1}), ('Amsterdam', 'Frankfurt', {'weight': 1}),
+     ('Amsterdam', 'New_York', {'weight': 1}), ('Atlanta', 'Birmingham', {'weight': 1}),
+     ('Atlanta', 'Charlotte', {'weight': 1}), ('Atlanta', 'Jacksonville', {'weight': 1}),
+     ('Austin', 'Houston', {'weight': 1}), ('Austin', 'San_Antonio', {'weight': 1}),
+     ('Baltimore', 'Philadelphia', {'weight': 1}), ('Baltimore', 'Pittsburgh', {'weight': 1}),
+     ('Baltimore', 'Washington_DC', {'weight': 1}), ('Bangkok', 'Delhi', {'weight': 1}),
+     ('Bangkok', 'Hong_Kong', {'weight': 1}), ('Baton_Rouge', 'Houston', {'weight': 1}),
+     ('Baton_Rouge', 'New_Orleans', {'weight': 1}), ('Beijing', 'Seoul', {'weight': 1}),
+     ('Beijing', 'Shanghai', {'weight': 1}), ('Berlin', 'Warsaw', {'weight': 1}),
+     ('Billings', 'Bismarck', {'weight': 1}), ('Billings', 'Denver', {'weight': 1}),
+     ('Billings', 'Spokane', {'weight': 1}), ('Birmingham', 'Nashville', {'weight': 1}),
+     ('Birmingham', 'New_Orleans', {'weight': 1}), ('Bismarck', 'Minneapolis', {'weight': 1}),
+     ('Boston', 'Providence', {'weight': 1}), ('Brussels', 'London', {'weight': 1}),
+     ('Bucharest', 'Istanbul', {'weight': 1}), ('Bucharest', 'Warsaw', {'weight': 1}),
+     ('Buffalo', 'Cleveland', {'weight': 1}), ('Buffalo', 'Rochester', {'weight': 1}),
+     ('Charleston', 'Jacksonville', {'weight': 1}), ('Charleston', 'Raleigh', {'weight': 1}),
+     ('Charlotte', 'Greensboro', {'weight': 1}), ('Chicago', 'Detroit', {'weight': 1}),
+     ('Chicago', 'Milwaukee', {'weight': 1}), ('Chicago', 'Springfield', {'weight': 1}),
+     ('Cincinnati', 'Columbus', {'weight': 1}), ('Cincinnati', 'Louisville', {'weight': 1}),
+     ('Cincinnati', 'Washington_DC', {'weight': 1}), ('Cleveland', 'Columbus', {'weight': 1}),
+     ('Cleveland', 'Toledo', {'weight': 1}), ('Columbus', 'Pittsburgh', {'weight': 1}),
+     ('Dallas', 'Houston', {'weight': 1}), ('Dallas', 'Little_Rock', {'weight': 1}),
+     ('Dallas', 'Oklahoma_City', {'weight': 1}), ('Delhi', 'Istanbul', {'weight': 1}),
+     ('Delhi', 'Mumbai', {'weight': 1}), ('Denver', 'Omaha', {'weight': 1}),
+     ('Denver', 'Salt_Lake_City', {'weight': 1}), ('Detroit', 'Toledo', {'weight': 1}),
+     ('El_Paso', 'San_Antonio', {'weight': 1}), ('El_Paso', 'Tucson', {'weight': 1}),
+     ('Frankfurt', 'Vienna', {'weight': 1}), ('Fresno', 'Las_Vegas', {'weight': 1}),
+     ('Fresno', 'Los_Angeles', {'weight': 1}), ('Fresno', 'Oakland', {'weight': 1}),
+     ('Greensboro', 'Louisville', {'weight': 1}), ('Greensboro', 'Raleigh', {'weight': 1}),
+     ('Greensboro', 'Richmond', {'weight': 1}), ('Hartford', 'Long_Island', {'weight': 1}),
+     ('Hartford', 'Providence', {'weight': 1}), ('Hong_Kong', 'Shanghai', {'weight': 1}),
+     ('Hong_Kong', 'Sydney', {'weight': 1}), ('Hong_Kong', 'Taipei', {'weight': 1}),
+     ('Honolulu', 'Los_Angeles', {'weight': 1}), ('Honolulu', 'Sydney', {'weight': 1}),
+     ('Honolulu', 'Taipei', {'weight': 1}), ('Istanbul', 'Rome', {'weight': 1}),
+     ('Jacksonville', 'Orlando', {'weight': 1}), ('Kansas_City', 'Omaha', {'weight': 1}),
+     ('Kansas_City', 'St_Louis', {'weight': 1}), ('Kansas_City', 'Tulsa', {'weight': 1}),
+     ('Las_Vegas', 'Phoenix', {'weight': 1}), ('Las_Vegas', 'Salt_Lake_City', {'weight': 1}),
+     ('Little_Rock', 'Memphis', {'weight': 1}), ('London', 'Paris', {'weight': 1}),
+     ('London', 'Washington_DC', {'weight': 1}), ('Long_Island', 'New_York', {'weight': 1}),
+     ('Los_Angeles', 'San_Diego', {'weight': 1}), ('Los_Angeles', 'Santa_Barbara', {'weight': 1}),
+     ('Louisville', 'Nashville', {'weight': 1}), ('Louisville', 'St_Louis', {'weight': 1}),
+     ('Madrid', 'Paris', {'weight': 1}), ('Madrid', 'Zurich', {'weight': 1}), ('Memphis', 'Nashville', {'weight': 1}),
+     ('Miami', 'Paris', {'weight': 1}), ('Miami', 'Tampa', {'weight': 1}),
+     ('Miami', 'West_Palm_Beach', {'weight': 1}), ('Milwaukee', 'Minneapolis', {'weight': 1}),
+     ('Minneapolis', 'Omaha', {'weight': 1}), ('Mumbai', 'Rome', {'weight': 1}),
+     ('Mumbai', 'Singapore', {'weight': 1}), ('New_Orleans', 'Tallahassee', {'weight': 1}),
+     ('New_York', 'Newark', {'weight': 1}), ('New_York', 'Scranton', {'weight': 1}),
+     ('New_York', 'Wilmington', {'weight': 1}), ('Newark', 'Philadelphia', {'weight': 1}),
+     ('Norfolk', 'Raleigh', {'weight': 1}), ('Norfolk', 'Wilmington', {'weight': 1}),
+     ('Oakland', 'Sacramento', {'weight': 1}), ('Oakland', 'Salt_Lake_City', {'weight': 1}),
+     ('Oakland', 'San_Francisco', {'weight': 1}), ('Oakland', 'Taipei', {'weight': 1}),
+     ('Oklahoma_City', 'Tulsa', {'weight': 1}), ('Orlando', 'West_Palm_Beach', {'weight': 1}),
+     ('Philadelphia', 'Scranton', {'weight': 1}), ('Phoenix', 'San_Diego', {'weight': 1}),
+     ('Phoenix', 'Tucson', {'weight': 1}), ('Pittsburgh', 'Scranton', {'weight': 1}),
+     ('Portland', 'Sacramento', {'weight': 1}), ('Portland', 'Salt_Lake_City', {'weight': 1}),
+     ('Portland', 'Seattle', {'weight': 1}), ('Portland', 'Tokyo', {'weight': 1}),
+     ('Richmond', 'Washington_DC', {'weight': 1}), ('Rochester', 'Syracuse', {'weight': 1}),
+     ('Rome', 'Vienna', {'weight': 1}), ('Rome', 'Zurich', {'weight': 1}),
+     ('San_Francisco', 'San_Jose', {'weight': 1}), ('San_Jose', 'Santa_Barbara', {'weight': 1}),
+     ('Scranton', 'Syracuse', {'weight': 1}), ('Seattle', 'Spokane', {'weight': 1}),
+     ('Seoul', 'Tokyo', {'weight': 1}), ('Singapore', 'Sydney', {'weight': 1}),
+     ('Springfield', 'St_Louis', {'weight': 1}), ('Taipei', 'Tokyo', {'weight': 1}),
+     ('Tallahassee', 'Tampa', {'weight': 1}), ('Vienna', 'Warsaw', {'weight': 1})])
 
 for i in range(0, len(G1)):
     if i < terminals:
@@ -211,12 +210,13 @@ terminal_nodes = list(G)[0:terminals]
 
 i = 0
 for key in pos_G1.copy():
-   pos_G1[i] = pos_G1.pop(key)
-   i = i + 1
+    pos_G1[i] = pos_G1.pop(key)
+    i = i + 1
 nx.draw(G, node_color=color_map, node_size=200, pos=pos_G1, with_labels=True)
 plt.show()
 
 main.sph(G, pos_G1, terminals)
 main.algorithm(G, pos_G1, terminals)
 main.algorithm2(G, pos_G1, terminals)
+main.algorithm3(G, pos_G1, terminals)
 print("-------------------------")

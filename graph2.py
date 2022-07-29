@@ -162,4 +162,5 @@ terminal_nodes = list(G)[0:terminals]
 main.sph(G, pos_G2, terminals)
 main.algorithm(G, pos_G2, terminals)
 main.algorithm2(G, pos_G2, terminals)
+main.algorithm3(G, pos_G2, terminals)
 print("-------------------------")

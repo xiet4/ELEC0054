@@ -137,6 +137,21 @@ def shortest_distance2(components, terminals_nodes, pos):
     return shortest_distance(sorted(distance.items(), key=lambda kv: (kv[1], kv[0])))
 
 
+def shortest_distance6(components, terminals_nodes, G, pos, terminals):
+    distance = {}
+    for i in components:
+        for j in terminals_nodes:
+            distance[i, j] = cal_distance(pos.get(i), pos.get(j))
+    distance = sorted(distance.items(), key=lambda kv: (kv[1], kv[0]))
+    distance = dict(itertools.islice(distance, terminals))
+    distance2 = {}
+    for key in distance:
+        i = key[0]
+        j = key[1]
+        distance2[i, j] = len(Human_gaze_algorithm_3(G, i, j, pos))
+    return shortest_distance(sorted(distance2.items(), key=lambda kv: (kv[1], kv[0])))
+
+
 def shortest_distance3(components, terminals_nodes, G):
     distance = {}
     for i in components:
@@ -153,10 +168,10 @@ def shortest_distance4(components, terminals_nodes, pos, G):
     return shortest_distance(sorted(distance.items(), key=lambda kv: (kv[1], kv[0])))
 
 
-def shortest_distance5(terminals_nodes,G):
-    distance={}
+def shortest_distance5(terminals_nodes, G):
+    distance = {}
     for i in terminals_nodes:
-        distance[0,i] = len(nx.dijkstra_path(G,0,i))
+        distance[0, i] = len(nx.dijkstra_path(G, 0, i))
     return shortest_distance(sorted(distance.items(), key=lambda kv: (kv[1], kv[0])))
 
 
@@ -223,6 +238,38 @@ def algorithm2(G, pos, terminals):
     return components
 
 
+def algorithm3(G, pos, terminals):
+    i = 0
+    for key in pos.copy():
+        pos[i] = pos.pop(key)
+        i = i + 1
+
+    terminals_pos = dict(itertools.islice(pos.items(), terminals))
+    terminal_node = list(G)[0:terminals]
+    n = 0
+    components = []
+    start_time = time.perf_counter()
+    while len(terminal_node) > 0:
+        if n == 0:
+            start, end = shortest_distance(all_distance(terminals_pos))
+            components = Human_gaze_algorithm_3(G, start, end, pos)
+
+        terminals_node = [i for i in terminal_node if i not in components]
+        if len(terminals_node) == 0:
+            break
+        start, end = shortest_distance6(components, terminals_node, G, pos, terminals)
+        new_components = Human_gaze_algorithm_3(G, start, end, pos)
+        components = list(set(components).union(set(new_components)))
+        terminals_node.remove(end)
+        n = n + 1
+    end_time = time.perf_counter()
+    print("Algorithm3 :")
+    print(components)
+    print(len(components))
+    print("time cost:", float(end_time - start_time) * 1000.0, "ms")
+    return components
+
+
 def sph(G, pos, terminals):
     i = 0
     for key in pos.copy():
@@ -235,7 +282,7 @@ def sph(G, pos, terminals):
     start_time = time.perf_counter()
     while len(terminal_node) > 0:
         if n == 0:
-            start, end = shortest_distance5(terminal_node,G)
+            start, end = shortest_distance5(terminal_node, G)
             components = nx.dijkstra_path(G, start, end)
 
         terminals_node = [i for i in terminal_node if i not in components]
